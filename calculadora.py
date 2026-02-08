@@ -44,4 +44,5 @@ def main(page: ft.Page):
     )
      page.add(layout_principal)
      page.update()
+
 ft.app(target=main)
