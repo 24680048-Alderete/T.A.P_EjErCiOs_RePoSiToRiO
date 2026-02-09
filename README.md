@@ -2,14 +2,20 @@
 ## Calculadora 📟🐍
 Desarrollo de una interfaz de calculadora utilizando el framework Flet para Python. Este documento describe el proceso de configuración del entorno de desarrollo y la implementación inicial de la interfaz.
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white) ![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Git Bash](https://img.shields.io/badge/Git%20Bash-F05032?style=for-the-badge&logo=git&logoColor=white)  ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white) ![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=apple&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ### 
 > [!CAUTION]
 >   Requisitos **Python🐍 3.10** o anterioes.
+>   Pues checar tu versión de Python usando `py --doctor`.
+
+>[!NOTE]
+> 📥 DOWNLOAD
 >
-> Git Bash.
+> [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](https://www.python.org/downloads/) 
+>
+> [![Git Bash](https://img.shields.io/badge/Git%20Bash-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/install/windows)
 > 
-> Pues checar tu versión de Python usando `py --doctor`.
+
 > 
 Para el uso de la interfaz de la calcualdora tendremos que crear un entorno virtual con la ayuda `Git Bash`, generaremos una carpeta de la siguiente manera:
 
