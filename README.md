@@ -54,7 +54,7 @@ display_text = ft.Text("0", color=ft.Colors.WHITE, size=30)
 display = ft.Container(
     content=display_text,
     bgcolor=ft.Colors.BLACK12,
-    border_radius=8,
+    border_radius=15,
     alignment=ft.alignment.Alignment(1, 0),
     padding=10,
     width=210,
@@ -110,4 +110,117 @@ En esta sección se implementa el sistema de disposición de botones utilizando 
     expand=False         # Evita expansión automática
 )
 ```
+En esta sección detalla la creación e inserción de botones individuales dentro del contenedor GridView. Cada botón está diseñado como una combinación de componentes para lograr funcionalidad y estética.
+```bash
+# Botón número 1
+grid.controls.append(
+    ft.Container(
+        ft.Button("1", data="1", on_click=button_clicked),
+        height=25, 
+        bgcolor=ft.Colors.PURPLE_100, 
+        border_radius=8
+    )
+)
 
+# Botón número 2
+grid.controls.append(
+    ft.Container(
+        ft.Button("2", data="2", on_click=button_clicked),
+        height=25,
+        bgcolor=ft.Colors.LIGHT_BLUE_100, 
+        border_radius=8
+    )
+)
+
+# Botón número 3
+grid.controls.append(
+    ft.Container(
+        ft.Button("3", data="3", on_click=button_clicked),
+        height=25, 
+        bgcolor=ft.Colors.AMBER_100,
+        border_radius=8
+    )
+)
+
+# Botón AC (All Clear)
+grid.controls.append(
+    ft.Container(
+        ft.Button("AC", data="AC", on_click=button_clicked),
+        height=25,
+        bgcolor=ft.Colors.GREEN_100,
+        border_radius=8
+    )
+)
+```
+1. Estructura Jerárquica (Nesting)
+Cada botón sigue una estructura de dos niveles:
+```bash
+Container (Estilo visual)
+└── Button (Funcionalidad interactiva)
+```
+2. Componente Interno: ft.Button()
+   * text (implícito por primer parámetro): Etiqueta visual del botón ("1", "2", "3", "AC")
+   * data: Valor identificador enviado a button_clicked() cuando se presiona
+   * on_click: Conector a la función manejadora button_clicked
+3. Contenedor Externo: ft.Container()
+   * height: 50: Altura uniforme para todos los botones
+   * bgcolor: Color de fondo distintivo por botón:
+   * PURPLE_100: Botón "1" (tono lavanda claro)
+   * LIGHT_BLUE_100: Botón "2" (tono azul claro)
+   * AMBER_100: Botón "3" (tono ámbar claro)
+   * GREEN_100: Botón "AC" (tono verde claro - convención para operaciones especiales)
+   * border_radius: 8: Esquinas redondeadas consistentes con el diseño del display
+En esta sección integra todos los componentes previamente creados en una estructura jerárquica final y ejecuta la aplicación.
+```bash
+# 1. Creación del Layout Principal
+layout_principal = ft.Column(
+    controls=[
+        display,  # Componente superior: área de visualización
+        grid      # Componente inferior: rejilla de botones
+    ],
+    tight=True  # Configuración de espaciado compacto
+)
+
+# 2. Adición del Layout a la Página
+page.add(layout_principal)
+
+# 3. Actualización Inicial de la Interfaz
+page.update()
+
+# 4. Inicio de la Aplicación
+ft.app(target=main)
+```
+1. `layout_principal = ft.Column(...)` - Contenedor Principal
+   * Propósito: Organiza verticalmente todos los elementos de la interfaz
+   * Parámetro controls: Lista ordenada de componentes hijos:
+     * display: Área de visualización numérica (creada anteriormente)
+     * grid: Rejilla con botones interactivos (GridView configurado)
+    * Parámetro tight=True:
+      * Elimina márgenes y padding predeterminados entre componentes
+      * Crea una disposición compacta y eficiente en espacio
+      * Proporciona apariencia de aplicación integrada
+2. page.add(layout_principal) - Integración en la Página
+   * Función: Agrega el contenedor principal a la colección de controles de la página
+   * Flujo jerárquico resultante:
+```bash
+page
+└── layout_principal (Column)
+    ├── display (Container con Text)
+    └── grid (GridView)
+        ├── Container(Button "1")
+        ├── Container(Button "2")
+        ├── Container(Button "3")
+        └── Container(Button "AC")
+```
+3. page.update() - Renderizado Inicial
+   * Propósito: Fuerza la actualización y renderizado de todos los componentes
+   * Momento de ejecución: Se llama después de agregar todos los elementos
+   * Importancia: Sin esta llamada, la interfaz no se mostraría visualmente
+4. ft.app(target=main) - Punto de Entrada de la Aplicación
+   * ft.app(): Función de Flet que inicia el ciclo de vida de la aplicación
+   * target=main: Especifica la función principal que contiene la lógica de construcción
+   * Comportamiento:
+     * Inicializa el entorno de ejecución
+     * Crea la ventana/contexto de renderizado
+     * Ejecuta la función main() para construir la interfaz
+     * Maneja el bucle de eventos y actualizaciones
