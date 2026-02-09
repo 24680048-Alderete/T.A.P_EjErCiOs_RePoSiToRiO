@@ -9,7 +9,7 @@ Desarrollo de una interfaz de calculadora utilizando el framework Flet para Pyth
 >
 > Git Bash.
 > 
-> Pues checar tu versión de Python usando `python --doctor`.
+> Pues checar tu versión de Python usando `py --doctor`.
 > 
 Para el uso de la interfaz de la calcualdora tendremos que crear un entorno virtual con la ayuda `Git Bash`, generaremos una carpeta de la siguiente manera:
 
@@ -38,7 +38,6 @@ Inicialmente, se generara la interfaz donde se mostrara la calculadora:
 import flet as ft
 
 def main(page: ft.Page):
-
     page.title = "Calculadora TAP"
     page.window_width = 250
     page.window_height = 400
@@ -47,19 +46,19 @@ def main(page: ft.Page):
 Aqui se definiran los valores del ancho y alto que tendra la ventana emergente y su titulo que mostrara, en este caso sera el titulo sera `"Calculadora TAP"` y la distancia que tendran nuestros botones con la ventana.   
 Esta sección implementa el área de visualización principal donde se muestran los números y resultados durante la interacción con la calculadora:
 ```bash
-   # 1. Definición del componente de texto
-display_text = ft.Text("0", color=ft.Colors.WHITE, size=30)
+    # 1. Definición del componente de texto
+    display_text = ft.Text("0", color=ft.Colors.WHITE, size=30)
 
-# 2. Creación del contenedor del display
-display = ft.Container(
-    content=display_text,
-    bgcolor=ft.Colors.BLACK12,
-    border_radius=15,
-    alignment=ft.alignment.Alignment(1, 0),
-    padding=10,
-    width=210,
-    height=70,
-)
+    # 2. Creación del contenedor del display
+    display = ft.Container(
+        content=display_text,
+        bgcolor=ft.Colors.BLACK54,
+        border_radius=25,
+        alignment=ft.alignment.Alignment(1,0),
+        padding=10,
+        width=210,
+        height=70,
+    )
 ```
 En este módulo se construye un panel interactivo compuesto por una pantalla (display) y botones de control.
 1. Configuración Inicial: Se define la variable que contendrá el texto a mostrar, junto con sus atributos tipográficos.
@@ -67,26 +66,24 @@ En este módulo se construye un panel interactivo compuesto por una pantalla (di
 3. Lógica de Interacción: Se programan los botones. Cada uno tiene un manejador de eventos (event listener) que, al hacer clic, calcula o asigna un nuevo valor y actualiza dinámicamente el contenido del display con dicho resultado.
 ```bash
     def button_clicked(e: ft.ControlEvent):
-    # 1. Captura del valor del botón
-    value = e.control.data
-    print(f"Button clicked with data = {value}")
-    
-    # 2. Lógica condicional según el botón presionado
-    if value == "AC":
-        # Limpieza completa: restablece el display a "0"
-        display_text.value = "0"
-    elif value == "1":
-        # Concatenación del dígito "1" al valor actual
-        display_text.value += "1"
-    elif value == "2":
-        # Concatenación del dígito "2" al valor actual
-        display_text.value += "2"
-    elif value == "3":
-        # Concatenación del dígito "3" al valor actual
-        display_text.value += "3"
-    
-    # 3. Actualización de la interfaz
-    page.update()
+        # 1. Captura del valor del botón
+        value = e.control.data
+        print(f"Button clicked with data = {value}")
+        
+        # 2. Lógica condicional según el botón presionado
+        if value == "AC":
+            # Limpieza completa: restablece el display a "0"
+            display_text.value = "0"
+        elif value in ["1", "2", "3"]:
+            # Si el display muestra "0", reemplazarlo, de lo contrario concatenar
+            if display_text.value == "0":
+                display_text.value = value
+            else:
+                display_text.value += value
+        
+        # 3. Actualización de la interfaz
+        page.update()
+
 ```
 Esta sección implementa la funcionalidad interactiva de los botones, gestionando eventos, procesamiento de datos y actualización de la interfaz.
 1. Obtención del Valor:
@@ -100,57 +97,77 @@ Esta sección implementa la funcionalidad interactiva de los botones, gestionand
    page.update() es fundamental para aplicar los cambios realizados en display_text.value y reflejarlos visualmente en la pantalla del usuario. Sin esta llamada, los cambios no serían visibles.
 En esta sección se implementa el sistema de disposición de botones utilizando un componente `GridView`, que organiza los botones en una cuadrícula para crear el teclado de la calculadora.
 ```bash
-# Configuración del GridView para organización de botones
-  ft.GridView(
-    runs_count=2,        # Define dos columnas
-    spacing=10,          # Espacio horizontal entre elementos
-    run_spacing=10,      # Espacio vertical entre filas
-    width=300,           # Ancho fijo (coincide con el display)
-    height=500,          # Alto fijo para control de dimensiones
-    expand=False         # Evita expansión automática
-)
+    # Configuración del GridView para organización de botones
+    grid = ft.GridView(
+        runs_count=2,        # Define dos columnas
+        spacing=10,          # Espacio horizontal entre elementos
+        run_spacing=10,      # Espacio vertical entre filas
+        width=210,           # Ancho fijo (coincide con el display)
+        height=200,          # Alto ajustado
+        expand=False         # Evita expansión automática
+    )
 ```
 En esta sección detalla la creación e inserción de botones individuales dentro del contenedor GridView. Cada botón está diseñado como una combinación de componentes para lograr funcionalidad y estética.
 ```bash
-# Botón número 1
-grid.controls.append(
-    ft.Container(
-        ft.Button("1", data="1", on_click=button_clicked),
-        height=25, 
-        bgcolor=ft.Colors.PURPLE_100, 
-        border_radius=8
+    # Botón número 1
+    grid.controls.append(
+        ft.Container(
+            content=ft.ElevatedButton(
+                "1", 
+                data="1", 
+                on_click=button_clicked,
+                width=50,
+                height=50
+            ),
+            bgcolor=ft.Colors.PURPLE_100,
+            border_radius=25
+        )
     )
-)
 
-# Botón número 2
-grid.controls.append(
-    ft.Container(
-        ft.Button("2", data="2", on_click=button_clicked),
-        height=25,
-        bgcolor=ft.Colors.LIGHT_BLUE_100, 
-        border_radius=8
+    # Botón número 2
+    grid.controls.append(
+        ft.Container(
+            content=ft.ElevatedButton(
+                "2", 
+                data="2", 
+                on_click=button_clicked,
+                width=50,
+                height=50
+            ),
+            bgcolor=ft.Colors.LIGHT_BLUE_100,
+            border_radius=25
+        )
     )
-)
 
-# Botón número 3
-grid.controls.append(
-    ft.Container(
-        ft.Button("3", data="3", on_click=button_clicked),
-        height=25, 
-        bgcolor=ft.Colors.AMBER_100,
-        border_radius=8
+    # Botón número 3
+    grid.controls.append(
+        ft.Container(
+            content=ft.ElevatedButton(
+                "3", 
+                data="3", 
+                on_click=button_clicked,
+                width=50,
+                height=50
+            ),
+            bgcolor=ft.Colors.AMBER_100,
+            border_radius=25
+        )
     )
-)
 
-# Botón AC (All Clear)
-grid.controls.append(
-    ft.Container(
-        ft.Button("AC", data="AC", on_click=button_clicked),
-        height=25,
-        bgcolor=ft.Colors.GREEN_100,
-        border_radius=8
+    # Botón AC (All Clear)
+    grid.controls.append(
+        ft.Container(
+            content=ft.ElevatedButton(
+                "AC", 
+                data="AC", 
+                on_click=button_clicked,
+                width=50,
+                height=50
+            ),
+            bgcolor=ft.Colors.GREEN_100,
+            border_radius=25
+        )
     )
-)
 ```
 1. Estructura Jerárquica (Nesting)
 Cada botón sigue una estructura de dos niveles:
@@ -172,20 +189,22 @@ Container (Estilo visual)
    * border_radius: 8: Esquinas redondeadas consistentes con el diseño del display
 En esta sección integra todos los componentes previamente creados en una estructura jerárquica final y ejecuta la aplicación.
 ```bash
-# 1. Creación del Layout Principal
-layout_principal = ft.Column(
-    controls=[
-        display,  # Componente superior: área de visualización
-        grid      # Componente inferior: rejilla de botones
-    ],
-    tight=True  # Configuración de espaciado compacto
-)
+    # 1. Creación del Layout Principal
+    layout_principal = ft.Column(
+        controls=[
+            display,  # Componente superior: área de visualización
+            grid,     # Componente inferior: rejilla de botones
+        ],
+        spacing=20,   # Espacio entre display y botones
+        alignment=ft.MainAxisAlignment.CENTER,
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER
+    )
 
-# 2. Adición del Layout a la Página
-page.add(layout_principal)
+    # 2. Adición del Layout a la Página
+    page.add(layout_principal)
 
-# 3. Actualización Inicial de la Interfaz
-page.update()
+    # 3. Actualización Inicial de la Interfaz
+    page.update()
 
 # 4. Inicio de la Aplicación
 ft.app(target=main)
