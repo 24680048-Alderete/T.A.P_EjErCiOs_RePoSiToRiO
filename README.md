@@ -30,7 +30,7 @@ pip install 'flet[all]'
 ## Verificación De Instalación
 Para asegurarnos de que `Flet` se haya instalado correctamente, podemos verificar su versión usando  `--doctor` comando:
 ```bash
-flet doctor
+flet --doctor
 ```
 Despues de crear la dependencia aislada de Flet, se abre Visual Studio Code en la carpeta que creamos previamente donde ahi esta importado Flet.
 Inicialmente, se generara la interfaz donde se mostrara la calculadora:
