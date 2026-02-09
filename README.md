@@ -6,6 +6,7 @@ Desarrollo de una interfaz de calculadora utilizando el framework Flet para Pyth
 ### 
 > [!CAUTION]
 >   Requisitos **Python🐍 3.10** o anterioes.
+> 
 >   Pues checar tu versión de Python usando `py --doctor`.
 
 >[!NOTE]
